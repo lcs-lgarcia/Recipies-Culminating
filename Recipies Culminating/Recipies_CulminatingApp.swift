@@ -11,7 +11,20 @@ import SwiftUI
 struct Recipies_CulminatingApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            
+            TabView{
+                
+                CreatorView()
+                    .tabItem{
+                        Label("Create Your Recipies", systemImage: "pencil")
+                    }
+                
+                SavedView()
+                    .tabItem{
+                        Label("Saved Recipies", systemImage: "book.fill")
+                    }
+                }
+            
         }
     }
 }
