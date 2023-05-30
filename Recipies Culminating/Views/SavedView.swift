@@ -9,11 +9,14 @@ import SwiftUI
 
 struct SavedView: View {
     var body: some View {
-        
-}
-
-struct SavedView_Previews: PreviewProvider {
-    static var previews: some View {
-        SavedView()
+        VStack{
+            
+        }
     }
 }
+    struct SavedView_Previews: PreviewProvider {
+        static var previews: some View {
+            SavedView()
+        }
+    }
+
