@@ -10,13 +10,29 @@ import SwiftUI
 struct CreatorView: View {
     
     @State var nameDish : String = ""
+    @State var ingridientsList : String = ""
     
     var body: some View {
         NavigationView{
             
             VStack{
-                
-                TextField("Name of the dish ...", text:$nameDish )
+                HStack{
+                    Spacer()
+                   
+                        TextField("Name of the dish ...", text:$nameDish )
+                            
+                    
+                    Text("     ")
+                }
+                HStack{
+                    Spacer()
+                   
+                        TextField("Add the ingridients and quantities ...", text:$ingridientsList
+                        )
+                            
+                    
+                    Text("     ")
+                }
             
                 
             }
