@@ -30,8 +30,10 @@ struct CreatorView: View {
                         TextField("Add the ingridients and quantities ...", text:$ingridientsList
                         )
                             
+                   
+              
                     
-                    Text("     ")
+                    
                 }
             
                 

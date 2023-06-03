@@ -12,6 +12,8 @@
 		27ECCE912A25AA0B00F398EC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27ECCE902A25AA0B00F398EC /* Preview Assets.xcassets */; };
 		27ECCE982A25AA3300F398EC /* CreatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ECCE972A25AA3300F398EC /* CreatorView.swift */; };
 		27ECCE9A2A25AA4C00F398EC /* SavedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ECCE992A25AA4C00F398EC /* SavedView.swift */; };
+		27ECCE9D2A2B820500F398EC /* Recipes.db in Resources */ = {isa = PBXBuildFile; fileRef = 27ECCE9C2A2B820400F398EC /* Recipes.db */; };
+		27ECCE9F2A2B842100F398EC /* AppDataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ECCE9E2A2B842100F398EC /* AppDataBase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		27ECCE902A25AA0B00F398EC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		27ECCE972A25AA3300F398EC /* CreatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorView.swift; sourceTree = "<group>"; };
 		27ECCE992A25AA4C00F398EC /* SavedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedView.swift; sourceTree = "<group>"; };
+		27ECCE9C2A2B820400F398EC /* Recipes.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = Recipes.db; sourceTree = SOURCE_ROOT; };
+		27ECCE9E2A2B842100F398EC /* AppDataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDataBase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,8 +58,10 @@
 			isa = PBXGroup;
 			children = (
 				27ECCE892A25AA0100F398EC /* Recipies_CulminatingApp.swift */,
+				27ECCE9C2A2B820400F398EC /* Recipes.db */,
 				27ECCE9B2A25AA5500F398EC /* Views */,
 				27ECCE8D2A25AA0B00F398EC /* Assets.xcassets */,
+				27ECCE9E2A2B842100F398EC /* AppDataBase.swift */,
 				27ECCE8F2A25AA0B00F398EC /* Preview Content */,
 			);
 			path = "Recipies Culminating";
@@ -138,6 +144,7 @@
 			files = (
 				27ECCE912A25AA0B00F398EC /* Preview Assets.xcassets in Resources */,
 				27ECCE8E2A25AA0B00F398EC /* Assets.xcassets in Resources */,
+				27ECCE9D2A2B820500F398EC /* Recipes.db in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +157,7 @@
 			files = (
 				27ECCE8A2A25AA0100F398EC /* Recipies_CulminatingApp.swift in Sources */,
 				27ECCE982A25AA3300F398EC /* CreatorView.swift in Sources */,
+				27ECCE9F2A2B842100F398EC /* AppDataBase.swift in Sources */,
 				27ECCE9A2A25AA4C00F398EC /* SavedView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
