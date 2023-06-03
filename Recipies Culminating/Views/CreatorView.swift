@@ -3,15 +3,18 @@
 //  Recipies Culminating
 //
 //  Created by Lucas García on 29/5/23.
-//
+    //
 import Blackbird
 import SwiftUI
 
 struct CreatorView: View {
     
     @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
+    @BlackbirdLiveModels({ db in try await IngridientsList.read(from: db)
+    }) var todoItems
+
     @State var nameDish : String = ""
-    @State var ingridientsList : String = ""
+    @State var ingridients : String = ""
     
     var body: some View {
         NavigationView{
@@ -28,14 +31,14 @@ struct CreatorView: View {
                 HStack{
                     Spacer()
                    
-                        TextField("Add the ingridients and quantities ...", text:$ingridientsList
+                        TextField("Add the ingridients and quantities ...", text:$ingridients
                         )
                             
                    
                     Button(action: {
                         Task {
                             try await db!.transaction { core in
-                                try core.query("INSERT INTO Recipes ( ingridients) VALUES (?)", ingridientsList)
+                                try core.query("INSERT INTO Recipes ( ingridients) VALUES (?)", ingridients)
                             }
                         }
                         
