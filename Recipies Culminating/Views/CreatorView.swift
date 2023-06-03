@@ -4,11 +4,12 @@
 //
 //  Created by Lucas García on 29/5/23.
 //
-
+import Blackbird
 import SwiftUI
 
 struct CreatorView: View {
     
+    @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
     @State var nameDish : String = ""
     @State var ingridientsList : String = ""
     
@@ -31,7 +32,17 @@ struct CreatorView: View {
                         )
                             
                    
-              
+                    Button(action: {
+                        Task {
+                            try await db!.transaction { core in
+                                try core.query("INSERT INTO Recipes ( ingridients) VALUES (?)", ingridientsList)
+                            }
+                        }
+                        
+                    }, label:{
+                        Text("ADD")
+                            .font(.caption)
+                    })
                     
                     
                 }

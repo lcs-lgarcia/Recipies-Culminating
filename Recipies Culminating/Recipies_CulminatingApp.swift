@@ -4,7 +4,7 @@
 //
 //  Created by Lucas García on 29/5/23.
 //
-
+import Blackbird
 import SwiftUI
 
 @main
