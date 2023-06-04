@@ -10,8 +10,8 @@ import SwiftUI
 struct CreatorView: View {
     
     @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
-    @BlackbirdLiveModels({ db in try await IngridientsList.read(from: db)
-    }) var todoItems
+    @BlackbirdLiveModels({ db in try await IngridientsLis.read(from: db)
+    }) var create
 
     @State var nameDish : String = ""
     @State var ingridients : String = ""
@@ -38,7 +38,7 @@ struct CreatorView: View {
                     Button(action: {
                         Task {
                             try await db!.transaction { core in
-                                try core.query("INSERT INTO Recipes ( ingridients) VALUES (?)", ingridients)
+                                try core.query("INSERT INTO Recipes (ingridients) VALUES (?)", ingridients)
                             }
                         }
                         
@@ -49,7 +49,27 @@ struct CreatorView: View {
                     
                     
                 }
-            
+                
+                List{
+                    ForEach(create.results){
+                        currentItem in
+                        Label(title: {
+                            Text(currentItem.ingridients)
+                        }, icon: {
+                            Text("-")
+                        })
+                        
+                        .onTapGesture {
+                            Task{
+                                try await db!.transaction { core in try core.query("UPDATE Creator SET ingridients = (?) WHERE id = (?)",  currentItem.id)
+                                    
+                                }
+                            }
+                        }
+                        
+                    }
+                                        
+                }
                 
             }
                 .navigationTitle("Create Your Recipies")
