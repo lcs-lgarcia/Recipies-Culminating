@@ -15,11 +15,13 @@ struct Recipies_CulminatingApp: App {
             TabView{
                 
                 CreatorView()
+                    .environment(\.blackbirdDatabase, AppDatabase.instance)
                     .tabItem{
                         Label("Create Your Recipies", systemImage: "pencil")
                     }
                 
                 SavedView()
+                    .environment(\.blackbirdDatabase, AppDatabase.instance)
                     .tabItem{
                         Label("Saved Recipies", systemImage: "book.fill")
                     }
