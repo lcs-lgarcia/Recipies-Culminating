@@ -27,7 +27,7 @@ struct CreatorView: View {
                         Text("Name of the dish")
                             .bold()
                         TextField("Name of the dish ...", text:$nameDish )
-                           // .textFieldStyle(.roundedBorder)
+                            .textFieldStyle(.roundedBorder)
                         Spacer()
                     }
                     VStack{
@@ -37,7 +37,7 @@ struct CreatorView: View {
                         HStack{
                             TextField("Add the ingridients and quantities ...", text:$ingridients
                             )
-                         //   .textFieldStyle(.roundedBorder)
+                            .textFieldStyle(.roundedBorder)
                             
                             
                             Button(action: {
@@ -70,12 +70,30 @@ struct CreatorView: View {
                         
                         
                     }
-          //          Text("Steps")
-       //                 .bold()
-       //             TextField("Write the steps ...", text:$recipeSteps )
-                      //  .textFieldStyle(.roundedBorder)
+                   Text("Steps")
+                      .bold()
+                   TextField("Write the steps ...", text:$recipeSteps )
+                        .textFieldStyle(.roundedBorder)
                 }
                 
+                Button(action: {
+                    Task {
+                        try await db!.transaction { core in
+                            try core.query("""
+INSERT INTO Creator (name, ingridients, steps)VALUES((?),(?),(?)
+)
+""",
+                                           nameDish, ingridients, recipeSteps)
+                        }
+                        nameDish = ""
+                        ingridients = ""
+                        recipeSteps = ""
+                    }
+                    
+                }, label:{
+                    Text("SAVE")
+                        
+                })
                 
             }
                 .navigationTitle("Create Your Recipies")
