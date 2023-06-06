@@ -18,13 +18,14 @@ struct SavedView: View {
        
         NavigationView{
             
-            List(savedRecipes.results, id: \.id){currentAdvice in
+            List(savedRecipes.results, id: \.id){currentRecipe in
                 VStack(alignment:.leading){
-                    Text(currentAdvice.name)
+                    Text(currentRecipe.name)
                         .bold()
+                    Text(currentRecipe.ingridients)
                     Text("Steps")
                         .bold()
-                    Text(currentAdvice.steps)
+                    Text(currentRecipe.steps)
                         
                    
                 }

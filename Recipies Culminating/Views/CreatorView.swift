@@ -26,7 +26,7 @@ struct CreatorView: View {
                         Spacer()
                         Text("Name of the dish")
                             .bold()
-                        TextField("Name of the dish ...", text:$nameDish )
+                        TextField("Be original!", text:$nameDish )
                             .textFieldStyle(.roundedBorder)
                         Spacer()
                     }
