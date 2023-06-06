@@ -10,7 +10,7 @@ import SwiftUI
 struct SavedView: View {
     
     @BlackbirdLiveModels({ db in
-        try await IngridientsLis.read(from: db)
+        try await Creator.read(from: db)
     }) var savedRecipes
     
     
@@ -37,6 +37,7 @@ struct SavedView: View {
     struct SavedView_Previews: PreviewProvider {
         static var previews: some View {
             SavedView()
+                .environment(\.blackbirdDatabase, AppDatabase.instance)
         }
     }
 

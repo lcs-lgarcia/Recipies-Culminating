@@ -11,7 +11,7 @@ struct CreatorView: View {
     
     @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
     
-    @BlackbirdLiveModels({ db in try await IngridientsLis.read(from: db)
+    @BlackbirdLiveModels({ db in try await Creator.read(from: db)
     }) var create
 
     @State var recipeSteps : String = ""
@@ -27,6 +27,7 @@ struct CreatorView: View {
                         Text("Name of the dish")
                             .bold()
                         TextField("Name of the dish ...", text:$nameDish )
+                           // .textFieldStyle(.roundedBorder)
                         Spacer()
                     }
                     VStack{
@@ -36,6 +37,7 @@ struct CreatorView: View {
                         HStack{
                             TextField("Add the ingridients and quantities ...", text:$ingridients
                             )
+                         //   .textFieldStyle(.roundedBorder)
                             
                             
                             Button(action: {
@@ -62,22 +64,19 @@ struct CreatorView: View {
                                 Text("-")
                             })
                             
-                            .onTapGesture {
-                                Task{
-                                    try await db!.transaction { core in try core.query("UPDATE Creator SET ingridients = (?) WHERE id = (?)",  currentItem.id)
-                                        
-                                    }
-                                }
-                            }
+                            
                             
                         }
                         
                         
                     }
-                    Text("Steps")
-                        .bold()
-                    TextField("Write the steps ...", text:$recipeSteps )
+          //          Text("Steps")
+       //                 .bold()
+       //             TextField("Write the steps ...", text:$recipeSteps )
+                      //  .textFieldStyle(.roundedBorder)
                 }
+                
+                
             }
                 .navigationTitle("Create Your Recipies")
             
