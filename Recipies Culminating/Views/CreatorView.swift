@@ -13,6 +13,8 @@ struct CreatorView: View {
     
     @BlackbirdLiveModels({ db in try await Creator.read(from: db)
     }) var create
+    @BlackbirdLiveModels({ db in try await ingridient.read(from: db)
+    }) var ingrd
 
     @State var recipeSteps : String = ""
     @State var nameDish : String = ""
@@ -56,7 +58,7 @@ struct CreatorView: View {
                         }
                     }
                     List{
-                        ForEach(create.results){
+                        ForEach(ingrd.results){
                             currentItem in
                             Label(title: {
                                 Text(currentItem.ingridients)

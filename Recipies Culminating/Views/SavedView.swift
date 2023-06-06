@@ -9,16 +9,19 @@ import SwiftUI
 
 struct SavedView: View {
     
+    @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
     @BlackbirdLiveModels({ db in
         try await Creator.read(from: db)
     }) var savedRecipes
-    
+    @BlackbirdLiveModels({ db in
+        try await ingridient.read(from: db)
+    }) var savedIngr
     
     var body: some View {
        
         NavigationView{
             
-            List(savedRecipes.results, id: \.id){currentRecipe in
+            List(savedRecipes.results, id: \.id, savedIngr.results){currentRecipe in
                 VStack(alignment:.leading){
                     Text(currentRecipe.name)
                         .bold()
@@ -33,6 +36,25 @@ struct SavedView: View {
             .navigationTitle("Your Recipes")
         }
         
+    }
+    
+    
+    func removeRows(at offsets: IndexSet) {
+        
+        Task{
+            try await db!.transaction{ core in
+                
+                var idList = ""
+                for offset in offsets {
+                    idList += "\(savedRecipes.results[offset].id),"
+                }
+                print(idList)
+                idList.removeLast()
+                print(idList)
+                
+                try core.query("DELETE FROM Creator WHERE id IN (?)", idList)
+            }
+        }
     }
 }
     struct SavedView_Previews: PreviewProvider {
