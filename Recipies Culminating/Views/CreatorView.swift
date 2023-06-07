@@ -13,7 +13,7 @@ struct CreatorView: View {
     
     @BlackbirdLiveModels({ db in try await Creator.read(from: db)
     }) var create
-    @BlackbirdLiveModels({ db in try await ingridient.read(from: db)
+    @BlackbirdLiveModels({ db in try await Ingridient.read(from: db)
     }) var ingrd
 
     @State var recipeSteps : String = ""
@@ -45,7 +45,7 @@ struct CreatorView: View {
                             Button(action: {
                                 Task {
                                     try await db!.transaction { core in
-                                        try core.query("INSERT INTO Creator (ingridients) VALUES (?)", ingridients)
+                                        try core.query("INSERT INTO ingridients (ingridient) VALUES (?)", ingridients)
                                     }
                                 }
                                 

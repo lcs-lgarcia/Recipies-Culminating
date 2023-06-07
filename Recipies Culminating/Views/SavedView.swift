@@ -14,18 +14,22 @@ struct SavedView: View {
         try await Creator.read(from: db)
     }) var savedRecipes
     @BlackbirdLiveModels({ db in
-        try await ingridient.read(from: db)
+        try await Ingridient.read(from: db)
     }) var savedIngr
     
     var body: some View {
        
         NavigationView{
             
-            List(savedRecipes.results, id: \.id, savedIngr.results){currentRecipe in
+            List(savedRecipes.results, id: \.ingridients_id){currentRecipe in
                 VStack(alignment:.leading){
                     Text(currentRecipe.name)
                         .bold()
-                    Text(currentRecipe.ingridients)
+                    List(savedIngr.results, id: \.id){currentRecipe in
+                        VStack(alignment:.leading){
+                            Text(currentRecipe.ingridients)
+                        }
+                    }
                     Text("Steps")
                         .bold()
                     Text(currentRecipe.steps)

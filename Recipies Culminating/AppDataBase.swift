@@ -22,9 +22,9 @@ struct AppDatabase {
             print("Removing existing database... ", terminator: "")
             do { try fileManager.removeItem(atPath: dbPath) } catch { print(error) }
             // Remove temporary files too
-            do { try fileManager.removeItem(atPath: dbPath + "-shm") } catch { print(error) }
+           do { try fileManager.removeItem(atPath: dbPath + "-shm") } catch { print(error) }
            
-            do { try fileManager.removeItem(atPath: dbPath + "-wal") } catch { print(error) }
+           do { try fileManager.removeItem(atPath: dbPath + "-wal") } catch { print(error) }
            
             print("removed.")
             
