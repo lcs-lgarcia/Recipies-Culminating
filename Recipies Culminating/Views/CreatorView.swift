@@ -18,6 +18,7 @@ struct CreatorView: View {
     @State var recipeSteps : String = ""
     @State var nameDish : String = ""
     @State var ingredients: String = ""
+    let ingridientId: Int
     
     var body: some View {
         NavigationView{
@@ -57,18 +58,24 @@ struct CreatorView: View {
                         }
                     }
                     List{
-                        ForEach(Ingr){
+                        ForEach(Ingr.results){
                             currentItem in
                             Label(title: {
-                                Text(currentItem.ingredients)
+                                Text("\(currentItem.description)")
                             }, icon: {
-                                Text("")
-                            })
+                               
+                            } )
                             
-                            
+                            .onTapGesture {
+                                Task{
+                                    try await db!.transaction { core in try core.query("UPDATE Ingredient SET description = (?) WHERE id = (?)", ingredients, currentItem.recipe_id)
+                                        
+                                    }
+                                }
+                            }
                             
                         }
-                        
+
                         
                     }
                    Text("Steps")

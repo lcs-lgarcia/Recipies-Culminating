@@ -25,7 +25,7 @@ struct SavedView: View {
                 VStack(alignment:.leading){
                     Text(currentRecipe.name)
                         .bold()
-                    List(savedIngr.results, id: \.id){currentRecip in
+                    List(savedIngr.results, id: \.recipe_id){currentRecip in
                         VStack(alignment:.leading){
                             Text(currentRecip.description)
                         }
