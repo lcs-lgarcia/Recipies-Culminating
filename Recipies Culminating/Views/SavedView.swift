@@ -11,23 +11,23 @@ struct SavedView: View {
     
     @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
     @BlackbirdLiveModels({ db in
-        try await Creator.read(from: db)
+        try await Recipe.read(from: db)
     }) var savedRecipes
     @BlackbirdLiveModels({ db in
-        try await Ingridient.read(from: db)
+        try await Ingredient.read(from: db)
     }) var savedIngr
     
     var body: some View {
        
         NavigationView{
             
-            List(savedRecipes.results, id: \.ingridients_id){currentRecipe in
+            List(savedRecipes.results, id: \.id){currentRecipe in
                 VStack(alignment:.leading){
                     Text(currentRecipe.name)
                         .bold()
-                    List(savedIngr.results, id: \.id){currentRecipe in
+                    List(savedIngr.results, id: \.id){currentRecip in
                         VStack(alignment:.leading){
-                            Text(currentRecipe.ingridients)
+                            Text(currentRecip.description)
                         }
                     }
                     Text("Steps")
@@ -42,24 +42,6 @@ struct SavedView: View {
         
     }
     
-    
-    func removeRows(at offsets: IndexSet) {
-        
-        Task{
-            try await db!.transaction{ core in
-                
-                var idList = ""
-                for offset in offsets {
-                    idList += "\(savedRecipes.results[offset].id),"
-                }
-                print(idList)
-                idList.removeLast()
-                print(idList)
-                
-                try core.query("DELETE FROM Creator WHERE id IN (?)", idList)
-            }
-        }
-    }
 }
     struct SavedView_Previews: PreviewProvider {
         static var previews: some View {

@@ -11,14 +11,13 @@ struct CreatorView: View {
     
     @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
     
-    @BlackbirdLiveModels({ db in try await Creator.read(from: db)
-    }) var create
-    @BlackbirdLiveModels({ db in try await Ingridient.read(from: db)
-    }) var ingrd
-
+    @BlackbirdLiveModels({ db in try await Recipe.read(from: db)
+    }) var Create
+    @BlackbirdLiveModels({ db in try await Ingredient.read(from: db)
+    }) var Ingr
     @State var recipeSteps : String = ""
     @State var nameDish : String = ""
-    @State var ingridients : String = ""
+    @State var ingredients: String = ""
     
     var body: some View {
         NavigationView{
@@ -37,7 +36,7 @@ struct CreatorView: View {
                         Text("Ingridients")
                             .bold()
                         HStack{
-                            TextField("Add the ingridients and quantities ...", text:$ingridients
+                            TextField("Add the ingridients and quantities ...", text:$ingredients
                             )
                             .textFieldStyle(.roundedBorder)
                             
@@ -45,7 +44,7 @@ struct CreatorView: View {
                             Button(action: {
                                 Task {
                                     try await db!.transaction { core in
-                                        try core.query("INSERT INTO ingridients (ingridient) VALUES (?)", ingridients)
+                                        try core.query("INSERT INTO Ingredient (description)VALUES (?)", ingredients)
                                     }
                                 }
                                 
@@ -58,12 +57,12 @@ struct CreatorView: View {
                         }
                     }
                     List{
-                        ForEach(ingrd.results){
+                        ForEach(Ingr){
                             currentItem in
                             Label(title: {
-                                Text(currentItem.ingridients)
+                                Text(currentItem.ingredients)
                             }, icon: {
-                                Text("-")
+                                Text("")
                             })
                             
                             
@@ -82,16 +81,15 @@ struct CreatorView: View {
                     Task {
                         try await db!.transaction { core in
                             try core.query("""
-INSERT INTO Creator (name, ingridients, steps)VALUES((?),(?),(?)
+INSERT INTO Recipe (name,steps)VALUES((?),(?)
 )
 """,
-                                           nameDish, ingridients, recipeSteps)
+                                           nameDish, recipeSteps)
                         }
                         nameDish = ""
-                        ingridients = ""
+                        ingredients = ""
                         recipeSteps = ""
                     }
-                    
                 }, label:{
                     Text("SAVE")
                         
