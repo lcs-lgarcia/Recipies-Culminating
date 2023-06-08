@@ -9,18 +9,27 @@ import SwiftUI
 
 struct CreatorView: View {
     
+    let ingridientId: Int
+    
     @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
     
     @BlackbirdLiveModels({ db in try await Recipe.read(from: db)
     }) var Create
     @BlackbirdLiveModels({ db in try await Ingredient.read(from: db)
     }) var Ingr
+    @BlackbirdLiveQuery (tableName: "Ingredient",{ db in try await db.query(" SELECT  FROM  WHERE ingredient_id = \(ingridientId)")
+    }) var recipe
+    
     @State var recipeSteps : String = ""
     @State var nameDish : String = ""
     @State var ingredients: String = ""
-    let ingridientId: Int
+    
+    
     
     var body: some View {
+        
+        
+        
         NavigationView{
             ScrollView{
                 VStack{
@@ -111,7 +120,7 @@ INSERT INTO Recipe (name,steps)VALUES((?),(?)
 
 struct CreatorView_Previews: PreviewProvider {
     static var previews: some View {
-        CreatorView()
+        CreatorView(ingridientId: 1)
             .environment(\.blackbirdDatabase, AppDatabase.instance)
 
     }
