@@ -25,14 +25,22 @@ struct SavedView: View {
                 VStack(alignment:.leading){
                     Text(currentRecipe.name)
                         .bold()
-                    List(savedIngr.results, id: \.recipe_id){currentRecip in
+                        .font (Font.custom("Zapfino", size: 20))
+                    Spacer()
+                    List(savedIngr.results, id: \.id){currentRecip in
                         VStack(alignment:.leading){
                             Text(currentRecip.description)
+                                .scaledToFit()
                         }
                     }
+                    .scaledToFit()
                     Text("Steps")
                         .bold()
+                    Spacer()
                     Text(currentRecipe.steps)
+                        .padding()
+                    Spacer()
+                    Spacer()
                         
                    
                 }

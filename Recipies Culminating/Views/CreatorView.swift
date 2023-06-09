@@ -9,25 +9,35 @@ import SwiftUI
 
 struct CreatorView: View {
     
-    let ingridientId: Int
+  //  let ingridientId: Int
     
     @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
     
     @BlackbirdLiveModels({ db in try await Recipe.read(from: db)
     }) var Create
     @BlackbirdLiveModels({ db in try await Ingredient.read(from: db)
-    }) var Ingr
-    @BlackbirdLiveQuery (tableName: "Ingredient",{ db in try await db.query(" SELECT  FROM  WHERE ingredient_id = \(ingridientId)")
-    }) var recipe
-    
+    }) var Ingre
+   
+   
+    @BlackbirdLiveQuery var recip: Blackbird.LiveResults<Blackbird.Row>
     @State var recipeSteps : String = ""
     @State var nameDish : String = ""
     @State var ingredients: String = ""
     
-    
-    
+   
     var body: some View {
         
+        //Mark Initializer
+        init(ingridientId: Int) {
+            
+            //  Initialize the live query
+            _recip = BlackbirdLiveQuery(tableName: "Ingredient", { db in
+                try await db.query("SELECT * FROM Ingredient WHERE recipe_id = \(ingridientId)")
+            })
+            
+            self.ingridientId = ingridientId
+            
+        }
         
         
         NavigationView{
@@ -43,10 +53,10 @@ struct CreatorView: View {
                     }
                     VStack{
                         Spacer()
-                        Text("Ingridients")
+                        Text("Ingredients")
                             .bold()
                         HStack{
-                            TextField("Add the ingridients and quantities ...", text:$ingredients
+                            TextField("Add the ingredients and quantities ...", text:$ingredients
                             )
                             .textFieldStyle(.roundedBorder)
                             
@@ -54,7 +64,7 @@ struct CreatorView: View {
                             Button(action: {
                                 Task {
                                     try await db!.transaction { core in
-                                        try core.query("INSERT INTO Ingredient (description)VALUES (?)", ingredients)
+                                        try core.query("INSERT INTO Ingredient (description, recipe_id) VALUES ((?), (?))", ingredients, recipe_id)
                                     }
                                 }
                                 
@@ -67,21 +77,15 @@ struct CreatorView: View {
                         }
                     }
                     List{
-                        ForEach(Ingr.results){
-                            currentItem in
+                        ForEach(Ingre.results){
+                            currentRecipe in
                             Label(title: {
-                                Text("\(currentItem.description)")
+                                Text(currentRecipe.description)
                             }, icon: {
                                
                             } )
                             
-                            .onTapGesture {
-                                Task{
-                                    try await db!.transaction { core in try core.query("UPDATE Ingredient SET description = (?) WHERE id = (?)", ingredients, currentItem.recipe_id)
-                                        
-                                    }
-                                }
-                            }
+                           
                             
                         }
 
@@ -106,6 +110,15 @@ INSERT INTO Recipe (name,steps)VALUES((?),(?)
                         ingredients = ""
                         recipeSteps = ""
                     }
+                    Task {
+                        try await db!.transaction { core in
+                            try core.query("""
+INSERT INTO Ingredient (description,id) VALUES((?), (?)
+)
+""",
+                                           ingredients)
+                        }
+                    }
                 }, label:{
                     Text("SAVE")
                         
@@ -120,7 +133,7 @@ INSERT INTO Recipe (name,steps)VALUES((?),(?)
 
 struct CreatorView_Previews: PreviewProvider {
     static var previews: some View {
-        CreatorView(ingridientId: 1)
+        CreatorView(recip: 2)
             .environment(\.blackbirdDatabase, AppDatabase.instance)
 
     }

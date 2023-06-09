@@ -1,3 +1,10 @@
+//
+//  AppDatabase.swift
+//  BlackbirdTest
+//
+//  Created by Russell Gordon on 2023-03-30.
+//
+
 import Blackbird
 import SwiftUI
 
@@ -19,12 +26,12 @@ struct AppDatabase {
             print(dbPath)
             
             // DEBUG: Ensure that database is copied again from app bundle
-            print("Removing existing database... ", terminator: "")
-            do {   try fileManager.removeItem(atPath: dbPath) } catch {print (error) }
+//            print("Removing existing database... ", terminator: "")
+//            try fileManager.removeItem(atPath: dbPath)
 //            // Remove temporary files too
-            do {    try fileManager.removeItem(atPath: dbPath + "-shm")} catch {print (error) }
-            do {   try fileManager.removeItem(atPath: dbPath + "-wal")} catch {print (error) }
-            print("removed.")
+//            try fileManager.removeItem(atPath: dbPath + "-shm")
+//            try fileManager.removeItem(atPath: dbPath + "-wal")
+//            print("removed.")
             
             // When no database currently exists at that path, copy one from the app bundle
             if !fileManager.fileExists(atPath: dbPath) {
@@ -59,9 +66,5 @@ struct AppDatabase {
     }()
     
 }
-
-
-
-
 
 
