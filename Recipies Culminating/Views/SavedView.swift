@@ -17,6 +17,8 @@ struct SavedView: View {
         try await Ingredient.read(from: db)
     }) var savedIngr
     
+
+    
     var body: some View {
        
         NavigationView{
@@ -27,9 +29,9 @@ struct SavedView: View {
                         .bold()
                         .font (Font.custom("Zapfino", size: 20))
                     Spacer()
-                    List(savedIngr.results, id: \.id){currentRecip in
+                    List(savedIngr.results, id: \.recipe_id){currentRecipe in
                         VStack(alignment:.leading){
-                            Text(currentRecip.description)
+                            Text(currentRecipe.description)
                                 .scaledToFit()
                         }
                     }
